@@ -12,6 +12,8 @@ type BinaryTree interface {
 	PreorderTraverse(Visit func(Node))
 	InorderTraverse(Visit func(Node))
 	PostorderTraverse(Visit func(Node))
+
+	PrintByLevel()
 }
 
 // Node is a node in the binary tree
