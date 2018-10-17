@@ -5,15 +5,15 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/trees/interpolation_search/main/main"
+	"github.com/trees/interpolation_search/main"
 )
 
 // TestInterpolationSearch does a simple input search
 func TestInterpolationSearch(t *testing.T) {
 	input := generateInput(500)
-	resultIndex, found := main.InterpolationSearch(input, input[5])
+	resultIndex, found := interpolationsearch.InterpolationSearch(input, input[5])
 
-	fmt.Println("aaaaaaaaaaaa")
+	fmt.Println("aaaaaabbaaaaaa")
 
 	assert.Equal(t, 5, resultIndex, "should be 5, true")
 	assert.Equal(t, true, found, "should be 5, true")
