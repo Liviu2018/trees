@@ -1,0 +1,16 @@
+{
+    "name": "Hans DAmpf",
+    "alter": 45,
+    "kontakte": [
+        {
+            "art": "privat",
+            "tel": "123" 
+        },
+        {
+            "art": "Arbeit",
+            "mail": "hd@hd.de"
+        }
+    ],
+    "tags": ["Freund", "Party", "Sport"]
+}
+
