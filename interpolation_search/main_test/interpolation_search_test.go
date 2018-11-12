@@ -8,6 +8,20 @@ import (
 	"github.com/trees/interpolation_search/main"
 )
 
+// benchmark for interpolation search method
+func BenchmarkInterpolationSearch(b *testing.B) {
+	b.StopTimer()
+	input := generateInput(b.N)
+	b.StartTimer()
+
+	resultIndex, found := interpolationsearch.InterpolationSearch(input, input[b.N/2])
+
+	fmt.Println("aaaa benchmark", b.N)
+
+	assert.Equal(b, b.N/2, resultIndex, "should be b.N/2, true")
+	assert.Equal(b, true, found, "should be b.N/2, true")
+}
+
 // TestInterpolationSearch does a simple input search
 func TestInterpolationSearch(t *testing.T) {
 	input := generateInput(500)

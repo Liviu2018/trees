@@ -2,8 +2,10 @@ package binarysearchtree
 
 // BinarySearchTree has the ADT operations of a binary search tree
 type BinarySearchTree interface {
-	AddElement(interface{}, func(interface{}, interface{}) int)
-	RemoveElement(interface{}, func(interface{}, interface{}) interface{})
+	Create(compare func(interface{}, interface{}) int) BinarySearchTree
+
+	AddElement(interface{})
+	RemoveElement(interface{}) interface{}
 
 	RemoveAllOccurrences(interface{}) int
 	RemoveMin() interface{}

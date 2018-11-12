@@ -3,7 +3,7 @@ package main
 import "github.com/trees/BinarySearchTree/binary_search_tree"
 
 func main() {
-	tree := binarysearchtree.BinarySearchTreeImpl{}
+	tree := binarysearchtree.Create(compare)
 
 	vals := []int{1, 22, 13, 4, 15, 6}
 	for _, v := range vals {
