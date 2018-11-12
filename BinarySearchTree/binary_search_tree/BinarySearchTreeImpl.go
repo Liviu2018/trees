@@ -5,21 +5,26 @@ import (
 	"strconv"
 )
 
-// BinarySearchTreeImpl is an implementation of binary tree
-type BinarySearchTreeImpl struct {
+// CreateBST creates and returns an empty BST
+func CreateBST(compare func(interface{}, interface{}) int) BinarySearchTree {
+	return (&Impl{nil, nil}).Create(compare)
+}
+
+// Impl is an implementation of binary tree
+type Impl struct {
 	head    *node
 	compare func(interface{}, interface{}) int
 }
 
 // Create creates and returns an empty tree
-func (b BinarySearchTreeImpl) Create(compare func(interface{}, interface{}) int) BinarySearchTree {
-	result := BinarySearchTreeImpl{head: nil, compare: compare}
+func (b *Impl) Create(compare func(interface{}, interface{}) int) BinarySearchTree {
+	result := Impl{head: nil, compare: compare}
 
-	return result
+	return &result
 }
 
 // AddElement add a new element to our tree
-func (b BinarySearchTreeImpl) AddElement(val interface{}) {
+func (b *Impl) AddElement(val interface{}) {
 	if b.head == nil {
 		b.head = &node{value: val, left: nil, right: nil, count: 1}
 
@@ -29,7 +34,7 @@ func (b BinarySearchTreeImpl) AddElement(val interface{}) {
 	b.addElementRecursive(b.head, val)
 }
 
-func (b BinarySearchTreeImpl) addElementRecursive(n *node, val interface{}) *node {
+func (b *Impl) addElementRecursive(n *node, val interface{}) *node {
 	if n == nil {
 		n = &node{value: val, left: nil, right: nil, count: 1}
 
@@ -52,7 +57,7 @@ func (b BinarySearchTreeImpl) addElementRecursive(n *node, val interface{}) *nod
 }
 
 // RemoveElement removes an element from the binary search tree
-func (b BinarySearchTreeImpl) RemoveElement(val interface{}) interface{} {
+func (b *Impl) RemoveElement(val interface{}) interface{} {
 	if b.head == nil {
 		return nil
 	}
@@ -70,7 +75,7 @@ func (b BinarySearchTreeImpl) RemoveElement(val interface{}) interface{} {
 	return b.removeElementRecursive(b.head, val)
 }
 
-func (b BinarySearchTreeImpl) removeElementRecursive(n *node, val interface{}) interface{} {
+func (b *Impl) removeElementRecursive(n *node, val interface{}) interface{} {
 	if b.compare(n.value, val) < 0 {
 		if n.left == nil {
 			return nil
@@ -106,7 +111,7 @@ func (b BinarySearchTreeImpl) removeElementRecursive(n *node, val interface{}) i
 	return b.removeElementRecursive(n.right, val)
 }
 
-func (b BinarySearchTreeImpl) deleteHeadAndBalanceSubtrees(n *node) *node {
+func (b *Impl) deleteHeadAndBalanceSubtrees(n *node) *node {
 	if n == nil {
 		return nil
 	}
@@ -136,7 +141,7 @@ func (b BinarySearchTreeImpl) deleteHeadAndBalanceSubtrees(n *node) *node {
 }
 
 // RemoveAllOccurrences removes all occurences of a given value
-func (b BinarySearchTreeImpl) RemoveAllOccurrences(val interface{}) int {
+func (b *Impl) RemoveAllOccurrences(val interface{}) int {
 	if b.head == nil {
 		return 0
 	}
@@ -151,7 +156,7 @@ func (b BinarySearchTreeImpl) RemoveAllOccurrences(val interface{}) int {
 	return b.removeAllOccurrencesRecursive(b.head, val)
 }
 
-func (b BinarySearchTreeImpl) removeAllOccurrencesRecursive(n *node, val interface{}) int {
+func (b *Impl) removeAllOccurrencesRecursive(n *node, val interface{}) int {
 	if b.compare(val, n.value) < 0 {
 		if n.left == nil {
 			return 0
@@ -184,7 +189,7 @@ func (b BinarySearchTreeImpl) removeAllOccurrencesRecursive(n *node, val interfa
 }
 
 // RemoveMin removes the minimum node out of this BST
-func (b BinarySearchTreeImpl) RemoveMin() interface{} {
+func (b *Impl) RemoveMin() interface{} {
 	if b.head == nil {
 		return nil
 	}
@@ -200,7 +205,7 @@ func (b BinarySearchTreeImpl) RemoveMin() interface{} {
 	return b.removeMinRecursive(b.head)
 }
 
-func (b BinarySearchTreeImpl) removeMinRecursive(n *node) *node {
+func (b *Impl) removeMinRecursive(n *node) *node {
 	if n == nil {
 		return nil
 	}
@@ -220,7 +225,7 @@ func (b BinarySearchTreeImpl) removeMinRecursive(n *node) *node {
 }
 
 // RemoveMax removes max value in BST
-func (b BinarySearchTreeImpl) RemoveMax() interface{} {
+func (b *Impl) RemoveMax() interface{} {
 	if b.head == nil {
 		return nil
 	}
@@ -236,7 +241,7 @@ func (b BinarySearchTreeImpl) RemoveMax() interface{} {
 	return nil
 }
 
-func (b BinarySearchTreeImpl) removeMaxRecursive(n *node) *node {
+func (b *Impl) removeMaxRecursive(n *node) *node {
 	if n == nil {
 		return nil
 	}
@@ -256,11 +261,11 @@ func (b BinarySearchTreeImpl) removeMaxRecursive(n *node) *node {
 }
 
 // FindMin return the min in a BST
-func (b BinarySearchTreeImpl) FindMin() interface{} {
+func (b *Impl) FindMin() interface{} {
 	return b.findMin(b.head)
 }
 
-func (b BinarySearchTreeImpl) findMin(n *node) *node {
+func (b *Impl) findMin(n *node) *node {
 	if n == nil {
 		return nil
 	}
@@ -273,11 +278,11 @@ func (b BinarySearchTreeImpl) findMin(n *node) *node {
 }
 
 // FindMax finds the max in this BST
-func (b BinarySearchTreeImpl) FindMax() interface{} {
+func (b *Impl) FindMax() interface{} {
 	return b.findMax(b.head)
 }
 
-func (b BinarySearchTreeImpl) findMax(n *node) *node {
+func (b *Impl) findMax(n *node) *node {
 	if n == nil {
 		return nil
 	}
@@ -290,11 +295,11 @@ func (b BinarySearchTreeImpl) findMax(n *node) *node {
 }
 
 // PreorderTraverse traverses tree in preorder
-func (b BinarySearchTreeImpl) PreorderTraverse(Visit func(Node)) {
+func (b *Impl) PreorderTraverse(Visit func(Node)) {
 	b.preorderTraverseRec(b.head, Visit)
 }
 
-func (b BinarySearchTreeImpl) preorderTraverseRec(n *node, Visit func(Node)) {
+func (b *Impl) preorderTraverseRec(n *node, Visit func(Node)) {
 	if n == nil {
 		return
 	}
@@ -305,11 +310,11 @@ func (b BinarySearchTreeImpl) preorderTraverseRec(n *node, Visit func(Node)) {
 }
 
 // InorderTraverse traverses tree in order
-func (b BinarySearchTreeImpl) InorderTraverse(Visit func(Node)) {
+func (b *Impl) InorderTraverse(Visit func(Node)) {
 	b.inorderTraverseRec(b.head, Visit)
 }
 
-func (b BinarySearchTreeImpl) inorderTraverseRec(n *node, Visit func(Node)) {
+func (b *Impl) inorderTraverseRec(n *node, Visit func(Node)) {
 	if n == nil {
 		return
 	}
@@ -320,11 +325,11 @@ func (b BinarySearchTreeImpl) inorderTraverseRec(n *node, Visit func(Node)) {
 }
 
 // PostorderTraverse traverses tree in postorder
-func (b BinarySearchTreeImpl) PostorderTraverse(Visit func(Node)) {
+func (b *Impl) PostorderTraverse(Visit func(Node)) {
 	b.inorderTraverseRec(b.head, Visit)
 }
 
-func (b BinarySearchTreeImpl) postorderTraverseRec(n *node, Visit func(Node)) {
+func (b *Impl) postorderTraverseRec(n *node, Visit func(Node)) {
 	if n == nil {
 		return
 	}
@@ -335,10 +340,14 @@ func (b BinarySearchTreeImpl) postorderTraverseRec(n *node, Visit func(Node)) {
 }
 
 // PrintByLevel prints the levels of a tree
-func (b BinarySearchTreeImpl) PrintByLevel() {
-	fmt.Println("printing tree")
+func (b *Impl) PrintByLevel() {
+	if b == nil {
+		fmt.Println("empty tree")
 
-	queue := []node{}
+		return
+	}
+
+	queue := make([]node, 0)
 	queue = append(queue, *b.head)
 	level := 0
 
