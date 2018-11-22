@@ -9,7 +9,8 @@ func main() {
 
 }
 
-func getSymbolTable(prog string) *gosym.Table {
+// GetSymbolTable gets the symbol table
+func GetSymbolTable(prog string) *gosym.Table {
 	exe, err := elf.Open(prog)
 	if err != nil {
 		panic(err)
